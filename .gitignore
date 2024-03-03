@@ -1,0 +1,8 @@
+**/node_modules/
+**/target/
+**/pkg/
+dist
+TODO.md
+.vscode
+.DS_Store
+local

@@ -1,13 +1,11 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
+import Main from "./views/Main";
 
 import "./style.css";
-import Contact from "./views/Contact";
 
 const App: React.FC = () => {
-  return (
-    <Contact />
-  )
+  return <Main />;
 };
 
 const root = createRoot(document.getElementById("root") as HTMLDivElement);

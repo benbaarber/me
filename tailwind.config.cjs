@@ -17,7 +17,7 @@ module.exports = {
         border: "#1d283a",
         input: "#1d283a",
         ring: "#1d283a00",
-        background: "#121826",
+        background: "#000022",
         foreground: "#FFF",
         primary: {
           DEFAULT: "#AFC5D0",

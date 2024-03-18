@@ -21,6 +21,12 @@ module.exports = {
         exclude: /node_modules/,
         use: ["style-loader", "css-loader", "postcss-loader"],
       },
+      {
+        test: /\.(glsl)/,
+        include: path.resolve(__dirname, "src"),
+        exclude: /node_modules/,
+        use: ["raw-loader"],
+      },
     ],
   },
   resolve: {

@@ -1,5 +1,8 @@
 import * as THREE from "three";
 
+export type Vec2 = [number, number];
+export type Vec3 = [number, number, number];
+
 export abstract class AnimationBase {
   canvas: HTMLCanvasElement;
   parentWidth: number;
@@ -37,8 +40,11 @@ export abstract class AnimationBase {
 }
 
 export abstract class CanvasAnimation extends AnimationBase {
+  cx: CanvasRenderingContext2D;
+
   constructor(canvas: HTMLCanvasElement) {
     super(canvas);
+    this.cx = canvas.getContext("2d");
     window.addEventListener("resize", this.onResize.bind(this));
   }
 

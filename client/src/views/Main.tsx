@@ -2,30 +2,26 @@ import React, { useRef } from "react";
 import { slowScrollTo, useAnimation } from "../util";
 import Ocean from "../animations/ocean";
 import { ChevronDown } from "lucide-react";
-import FadeIn from "../partials/FadeIn";
+import Tesseract from "../animations/tesseract";
 
 const Main: React.FC = () => {
   const oceanRef = useAnimation(Ocean);
+  const tesseractRef = useAnimation(Tesseract);
   const scrollToRef = useRef<HTMLDivElement>();
 
   return (
     <div className="relative h-[3000px] w-full">
       <canvas ref={oceanRef} className="fixed -z-50 h-svh w-full" />
+      <canvas className="absolute top-[1200px] -z-40 h-full w-full" />
       <div className="flex flex-col items-center">
-        <FadeIn show appear timeout={200}>
-          <p className="pt-20 text-center text-6xl text-white/50">Ben Barber</p>
-        </FadeIn>
-        <FadeIn show appear timeout={1000}>
-          <p className="pb-3 pt-3 text-center text-2xl text-white/30">
-            {["Backend", "Frontend", "Ops", "ML"].join(" · ")}
-          </p>
-        </FadeIn>
-        <FadeIn show appear timeout={1200}>
-          <ChevronDown
-            className="h-12 w-12 cursor-pointer text-white/50 transition-all hover:text-white"
-            onClick={() => slowScrollTo(scrollToRef.current)}
-          />
-        </FadeIn>
+        <p className="pt-20 text-center text-6xl text-white/50">Ben Barber</p>
+        <p className="pb-3 pt-3 text-center text-2xl text-white/30">
+          {["Backend", "Frontend", "Ops", "ML"].join(" · ")}
+        </p>
+        <ChevronDown
+          className="h-12 w-12 cursor-pointer text-white/50 transition-all hover:text-white"
+          onClick={() => slowScrollTo(scrollToRef.current)}
+        />
         <div className="h-svh" />
         <div
           ref={scrollToRef}
@@ -49,7 +45,7 @@ const Main: React.FC = () => {
             </p>
           </div>
           <div className="md:w-1/3">
-            <canvas className="-z-40 w-full" />
+            <canvas ref={tesseractRef} className="-z-30 w-full" />
           </div>
         </div>
       </div>

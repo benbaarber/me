@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export type Constructor<T> = new (...args: unknown[]) => T;
 
-export function useAnimation<T extends AnimationBase>(ta: Constructor<T>) {
+export function useAnimation<T extends AnimationBase>(cls: Constructor<T>) {
   const [animation, setAnimation] = useState<AnimationBase>();
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export function useAnimation<T extends AnimationBase>(ta: Constructor<T>) {
   }, [animation]);
 
   return useCallback((node: HTMLCanvasElement) => {
-    if (node) setAnimation(new ta(node));
+    if (node) setAnimation(new cls(node));
   }, []);
 }
 

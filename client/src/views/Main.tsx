@@ -10,9 +10,8 @@ const Main: React.FC = () => {
   const scrollToRef = useRef<HTMLDivElement>();
 
   return (
-    <div className="relative h-[3000px] w-full">
-      <canvas ref={oceanRef} className="fixed -z-50 h-svh w-full" />
-      <canvas className="absolute top-[1200px] -z-40 h-full w-full" />
+    <div className="relative w-full">
+      <canvas ref={oceanRef} className="fixed -z-50 h-screen w-full" />
       <div className="flex flex-col items-center">
         <p className="pt-20 text-center text-6xl text-white/50">Ben Barber</p>
         <p className="pb-3 pt-3 text-center text-2xl text-white/30">
@@ -22,13 +21,13 @@ const Main: React.FC = () => {
           className="h-12 w-12 cursor-pointer text-white/50 transition-all hover:text-white"
           onClick={() => slowScrollTo(scrollToRef.current)}
         />
-        <div className="h-svh" />
+        <div className="h-screen" />
         <div
           ref={scrollToRef}
-          className="w-full md:w-3/4 md:items-center md:justify-between lg:flex"
+          className="w-full px-4 lg:flex lg:items-center lg:pl-24"
         >
-          <div className="md:w-1/3">
-            <p className="pt-24 text-5xl text-white/50">About Me</p>
+          <div className="lg:min-w-1/3 lg:w-1/3 lg:shrink-0 lg:grow-0">
+            <p className="text-5xl text-white/50">About Me</p>
             <p className="pt-12 text-white/50">
               As a self-taught software engineer with a boundless passion for
               innovation, it is my mission to make long-lasting contributions to
@@ -44,10 +43,13 @@ const Main: React.FC = () => {
               lasting mark on the technological landscape.
             </p>
           </div>
-          <div className="md:w-1/3">
-            <canvas ref={tesseractRef} className="-z-30 w-full" />
+          <div className="aspect-square max-h-screen w-full lg:shrink lg:grow lg:p-8">
+            <div className="h-full w-full">
+              <canvas ref={tesseractRef} className="-z-30 cursor-move" />
+            </div>
           </div>
         </div>
+        <div className="h-[50vh]" />
       </div>
     </div>
   );

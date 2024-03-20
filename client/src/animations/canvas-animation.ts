@@ -68,32 +68,39 @@ export abstract class ThreeAnimation extends AnimationBase {
 
   constructor(canvas: HTMLCanvasElement) {
     super(canvas);
-    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+
+    this.renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: true,
+      alpha: true,
+    });
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0x000022);
     this.camera = new THREE.PerspectiveCamera(
       75,
-      window.innerWidth / window.innerHeight,
+      canvas.width / canvas.height,
       0.1,
       1000,
     );
+
     this.threeScale();
 
     window.addEventListener("resize", this.onResize.bind(this));
   }
 
   threeScale() {
+    const rect = this.canvas.parentElement.getBoundingClientRect();
+    const w = rect.width;
+    const h = rect.height;
+    this.renderer.setSize(w, h, false);
     if (this.camera) {
-      this.camera.aspect = window.innerWidth / window.innerHeight;
+      this.camera.aspect = w / h;
       this.camera.updateProjectionMatrix();
     }
-    this.renderer.setSize(window.innerWidth, window.innerHeight, false);
   }
 
   onResize() {
     if (this.parentWidth !== this.canvas.parentElement.clientWidth) {
       this.parentWidth = this.canvas.parentElement.clientWidth;
-      this.scale();
       this.threeScale();
     }
   }

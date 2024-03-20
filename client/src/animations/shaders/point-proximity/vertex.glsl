@@ -9,4 +9,5 @@ void main() {
   proximity = 1.0 - smoothstep(0.0, maxDistance, dist);
   
   gl_Position = projectionMatrix * viewMatrix * modelPosition;
+  gl_PointSize = 2.5;
 }

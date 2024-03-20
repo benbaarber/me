@@ -108,9 +108,6 @@ class Ocean extends ThreeAnimation {
       const particles = new THREE.Points(particlesGeometry, particlesMaterial);
       this.scene.add(particles);
 
-      // const lines = new THREE.LineSegments(particlesGeometry, particlesMaterial);
-      // this.scene.add(lines);
-
       const planeNormal = new THREE.Vector3(0, 1, 0);
       this.deepPlane = new THREE.Plane(planeNormal, 0);
     }
@@ -141,7 +138,6 @@ class Ocean extends ThreeAnimation {
     this.raycaster.setFromCamera(this.pointer, this.camera);
     const target = new THREE.Vector3();
     this.raycaster.ray.intersectPlane(plane, target);
-    // this.pointLight.position.copy(target);
     this.particlesMaterial.uniforms.target.value.copy(target);
   }
 
@@ -168,26 +164,29 @@ class Ocean extends ThreeAnimation {
         vertex.fromBufferAttribute(positionAttr, i);
         const xWave = Math.sin(time + vertex.x + Math.cos(time / 3)) * 0.25;
         const yWave = Math.sin(time + vertex.y + Math.sin(time / 3)) * 0.25;
-        // const noise = Math.sin(t + (vertex.x + vertex.y) * Math.random()) * 0.25;
         positionAttr.setZ(i, xWave + yWave);
       }
       positionAttr.needsUpdate = true;
 
       if (yPos > 1) {
         this.castSurfaceLight();
-      } else {
-        this.castDeepLight();
       }
+    }
 
-      this.camera.position.setX(Math.sin(-time / 10) * 15);
-      this.camera.position.setZ(Math.cos(-time / 10) * 15);
+    if (yPos < 1) {
+      this.castDeepLight();
+    } else {
+      this.castSurfaceLight();
+    }
 
-      if (yPos > 0) {
-        this.camera.lookAt(this.scene.position);
-      } else {
-        const target = new THREE.Vector3().copy(this.scene.position);
-        this.camera.lookAt(target.setY(this.camera.position.y - 1));
-      }
+    this.camera.position.setX(Math.sin(-time / 10) * 15);
+    this.camera.position.setZ(Math.cos(-time / 10) * 15);
+
+    if (yPos > 0) {
+      this.camera.lookAt(this.scene.position);
+    } else {
+      const target = new THREE.Vector3().copy(this.scene.position);
+      this.camera.lookAt(target.setY(this.camera.position.y - 1));
     }
 
     this.renderer.render(this.scene, this.camera);

@@ -10,7 +10,7 @@ class Tesseract extends ThreeAnimation {
   constructor(canvas: HTMLCanvasElement) {
     super(canvas);
 
-    this.camera.position.set(1.5, 3, 4.5);
+    this.camera.position.set(2, 3, 5);
     this.camera.lookAt(this.scene.position);
 
     // Tesseract vertices in 4D (x, y, z, w)

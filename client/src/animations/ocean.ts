@@ -12,6 +12,7 @@ class Ocean extends ThreeAnimation {
   surfacePlane: THREE.Plane;
   deepPlane: THREE.Plane;
   particlesMaterial: THREE.ShaderMaterial;
+  maxDepth: number;
 
   constructor(canvas: HTMLCanvasElement) {
     super(canvas);
@@ -111,6 +112,51 @@ class Ocean extends ThreeAnimation {
       const planeNormal = new THREE.Vector3(0, 1, 0);
       this.deepPlane = new THREE.Plane(planeNormal, 0);
     }
+
+    // Floor
+
+    {
+      const depth = 15 - this.canvas.parentElement.clientHeight / 50;
+      this.maxDepth = depth + 3;
+      console.log(depth);
+
+      const floodlight1 = new THREE.PointLight("blue", 100);
+      floodlight1.position.set(0, depth + 10, 0);
+      this.scene.add(floodlight1);
+
+      const planeGeometry = new THREE.PlaneGeometry(40, 40, 40, 40);
+      const planeMaterial = new THREE.MeshBasicMaterial({
+        color: "black",
+        side: THREE.DoubleSide,
+      });
+      const floor = new THREE.Mesh(planeGeometry, planeMaterial);
+      floor.position.set(0, depth, 0);
+      floor.rotateX(Math.PI / 2);
+      this.scene.add(floor);
+
+      const pyramidMaterial = new THREE.MeshPhongMaterial({
+        color: "black",
+        specular: "navy",
+      });
+      const createPyramid = (size: number, position: THREE.Vector3) => {
+        const geometry = new THREE.ConeGeometry(size / 2, size, 4);
+        const material = pyramidMaterial;
+        const pyramid = new THREE.Mesh(geometry, material);
+        pyramid.position.copy(position);
+        pyramid.rotateY(Math.PI / 2);
+        this.scene.add(pyramid);
+      };
+
+      createPyramid(10, new THREE.Vector3(0, depth, 0));
+      createPyramid(7.5, new THREE.Vector3(5, depth, 0));
+      createPyramid(7.5, new THREE.Vector3(0, depth, 5));
+      createPyramid(7.5, new THREE.Vector3(-5, depth, 0));
+      createPyramid(7.5, new THREE.Vector3(0, depth, -5));
+      createPyramid(5, new THREE.Vector3(5, depth, 5));
+      createPyramid(5, new THREE.Vector3(-5, depth, 5));
+      createPyramid(5, new THREE.Vector3(-5, depth, 5));
+      createPyramid(5, new THREE.Vector3(-5, depth, -5));
+    }
   }
 
   castSurfaceLight() {
@@ -156,14 +202,14 @@ class Ocean extends ThreeAnimation {
   override step(time: number): void {
     time /= 1000;
     const yPos = 5 - this.scroll / 50;
-    this.camera.position.setY(yPos);
+    if (yPos >= this.maxDepth) this.camera.position.setY(yPos);
     if (yPos > -15) {
       const positionAttr = this.ocean.getAttribute("position");
       const vertex = new THREE.Vector3();
       for (let i = 0; i < positionAttr.count; i++) {
         vertex.fromBufferAttribute(positionAttr, i);
-        const xWave = Math.sin(time + vertex.x + Math.cos(time / 3)) * 0.25;
-        const yWave = Math.sin(time + vertex.y + Math.sin(time / 3)) * 0.25;
+        const xWave = Math.sin(time + vertex.x + Math.cos(time / 3)) * 0.42;
+        const yWave = Math.sin(time + vertex.y + Math.sin(time / 3)) * 0.42;
         positionAttr.setZ(i, xWave + yWave);
       }
       positionAttr.needsUpdate = true;

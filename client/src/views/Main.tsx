@@ -1,8 +1,32 @@
 import React, { useRef } from "react";
 import { slowScrollTo, useAnimation } from "../util";
 import Ocean from "../animations/ocean";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Eye } from "lucide-react";
 import Tesseract from "../animations/tesseract";
+import PlugButton, { Plug } from "../components/Plug";
+
+const plugs: Plug[] = [
+  {
+    text: "GitHub",
+    link: "https://github.com/benbaarber",
+    iconSrc: "static/github.png",
+  },
+  {
+    text: "LinkedIn",
+    link: "https://www.linkedin.com/in/benbarber121/",
+    iconSrc: "static/linkedin.jpg",
+  },
+  {
+    text: "Email",
+    link: "mailto:benbarber121@gmail.com",
+    iconSrc: "static/gmail.jpg",
+  },
+  {
+    text: "View Resume",
+    link: "static/resume.pdf",
+    Icon: Eye,
+  },
+];
 
 const Main: React.FC = () => {
   const oceanRef = useAnimation(Ocean);
@@ -10,7 +34,7 @@ const Main: React.FC = () => {
   const scrollToRef = useRef<HTMLDivElement>();
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full overflow-x-hidden">
       <canvas ref={oceanRef} className="fixed -z-50 h-screen w-full" />
       <div className="flex flex-col items-center">
         <p className="pt-20 text-center text-6xl text-white/50">Ben Barber</p>
@@ -43,13 +67,20 @@ const Main: React.FC = () => {
               lasting mark on the technological landscape.
             </p>
           </div>
-          <div className="aspect-square max-h-screen w-full lg:shrink lg:grow lg:p-8">
+          <div className="aspect-square max-h-[50vh] w-full lg:max-h-[75vh] lg:shrink lg:grow lg:p-8">
             <div className="h-full w-full">
               <canvas ref={tesseractRef} className="-z-30 cursor-move" />
             </div>
           </div>
         </div>
-        <div className="h-[50vh]" />
+        <div className="h-[300px]" />
+        <p className="text-center text-6xl text-white/50">Contact</p>
+        <div className="flex flex-wrap items-center justify-center gap-3 py-6 lg:gap-6">
+          {plugs.map((plug) => (
+            <PlugButton {...plug} key={plug.text} />
+          ))}
+        </div>
+        <div className="h-[60vh] w-full" />
       </div>
     </div>
   );

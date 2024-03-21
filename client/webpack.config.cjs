@@ -27,6 +27,12 @@ module.exports = {
         exclude: /node_modules/,
         use: ["raw-loader"],
       },
+      {
+        test: /\.(png|jpe?g|gif|svg|woff2?|ttf|otf)$/i,
+        include: path.resolve(__dirname, "src"),
+        type: "asset/resource",
+        dependency: { not: ["url"] },
+      },
     ],
   },
   resolve: {
@@ -44,6 +50,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         { from: path.resolve(__dirname, "index.html"), to: "index.html" },
+        { from: path.resolve(__dirname, "src", "static/"), to: "static/" },
       ],
     }),
   ],
@@ -58,5 +65,6 @@ module.exports = {
     static: path.resolve(__dirname, "../dist/client"),
     port: 3000,
     historyApiFallback: true,
+    hot: true,
   },
 };

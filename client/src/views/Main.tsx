@@ -71,6 +71,9 @@ const Main: React.FC = () => {
             <div className="h-full w-full">
               <canvas ref={tesseractRef} className="-z-30 cursor-move" />
             </div>
+            <p className="w-full text-center text-xs text-white/20">
+              Click and drag to rotate
+            </p>
           </div>
         </div>
         <div className="h-[300px]" />
@@ -81,6 +84,20 @@ const Main: React.FC = () => {
           ))}
         </div>
         <div className="h-[60vh] w-full" />
+        <div className="w-full px-6 pb-3 text-white/50 lg:flex lg:justify-between">
+          <p className="pb-3 text-center">Copyright 2024 Ben Barber</p>
+          <p className="text-center">
+            Like the visuals? See my code{" "}
+            <a
+              href="https://github.com/benbaarber/me"
+              target="_blank"
+              className="font-bold text-blue-400/50 hover:text-blue-400/80"
+              rel="noreferrer"
+            >
+              here
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -8,7 +8,7 @@
     "build:client": "webpack build --config client/webpack.config.cjs",
     "build": "yarn build:server; yarn build:client",
     "start": "node dist/main.js",
-    "hot": "webpack-dev-server --config client/webpack.config.cjs",
+    "dev:ui": "webpack-dev-server --config client/webpack.config.cjs",
     "lint": "eslint --ext .tsx --ext .ts client/ --fix --config client/.eslintrc.json && npx prettier client --write"
   },
   "babel": {
@@ -66,5 +66,6 @@
     "webpack": "^5.90.3",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.2"
-  }
+  },
+  "packageManager": "yarn@4.9.2"
 }

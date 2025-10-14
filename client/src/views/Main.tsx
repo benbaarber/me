@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { slowScrollTo, useAnimation } from "../util";
 import Ocean from "../animations/ocean";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Eye } from "lucide-react";
 import Tesseract from "../animations/tesseract";
 import PlugButton, { Plug } from "../components/Plug";
 
@@ -21,14 +21,14 @@ const plugs: Plug[] = [
     link: "mailto:benbarber121@gmail.com",
     iconSrc: "static/gmail.jpg",
   },
-  // {
-  //   text: "View Resume",
-  //   link: "static/resume.pdf",
-  //   Icon: Eye,
-  // },
+  {
+    text: "View Resume",
+    link: "static/resume.pdf",
+    Icon: Eye,
+  },
 ];
 
-const Main: React.FC = () => {
+export default function Main() {
   const oceanRef = useAnimation(Ocean);
   const tesseractRef = useAnimation(Tesseract);
   const scrollToRef = useRef<HTMLDivElement>();
@@ -81,5 +81,3 @@ const Main: React.FC = () => {
     </div>
   );
 };
-
-export default Main;

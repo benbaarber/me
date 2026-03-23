@@ -1,0 +1,17 @@
+name: Deploy
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: greenbean
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker build -t crungulism .
+      - name: Restart container
+        run: |
+          docker stop crungulism || true
+          docker rm crungulism || true
+          docker run -d --name crungulism --restart unless-stopped -p 8080:8080 crungulism
